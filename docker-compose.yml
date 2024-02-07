@@ -1,0 +1,26 @@
+services:
+  text2vid:
+    ports:
+      - 7095:7095
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    command: 
+      - bash
+      - utilities/scripts/start_text2vid.sh
+    env_file:
+      - .env
+    restart: always
+    environment: 
+      - NVIDIA_VISIBLE_DEVICES=6
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+              count: ALL
+    
+
